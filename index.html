@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1018">
+  <title>Character Archive · USB Test</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">✦</span><div><strong>Character Archive</strong><small>USB Library · Test version</small></div></div>
+    <div class="topactions">
+      <span id="saveStatus" class="status" role="status" aria-live="polite">No folder selected</span>
+      <button id="retrySaveBtn" class="warning hidden" type="button">Retry save</button>
+      <button id="downloadUnsavedBtn" class="quiet hidden" type="button">Download unsaved profile</button>
+      <button id="backupBtn" class="quiet hidden" type="button">Back up library</button>
+      <button id="changeFolderBtn" class="quiet hidden" type="button">Change folder</button>
+    </div>
+  </header>
+
+  <section id="startup" class="startup">
+    <div class="startcard" id="folderStep">
+      <div class="stepIcon">▣</div>
+      <p class="eyebrow">STEP 1 OF 2</p>
+      <h1>Select your library folder</h1>
+      <p>Insert your flash drive and choose a folder for Character Archive. You will choose that folder each time you start the app.</p>
+      <button class="primary large" id="selectFolderBtn" type="button">Select library folder</button>
+      <p class="helper">Runs in Chrome or Edge on HTTPS or localhost. Your files stay in the folder you select—no OneDrive or Microsoft sign-in.</p>
+      <p id="folderError" class="errorText hidden" role="alert"></p>
+    </div>
+    <div class="startcard hidden" id="writerStep">
+      <div class="eyebrow">STEP 2 OF 2</div>
+      <h1>Who's writing?</h1>
+      <p>Selected folder: <strong id="folderName"></strong></p>
+      <div class="writergrid" id="writerGrid"></div>
+      <button id="newWriterBtn" type="button" class="quiet wide">＋ Create writer profile</button>
+      <p class="helper">Writer profiles organize files; they are not password-protected accounts.</p>
+      <button id="reselectFolderBtn" type="button" class="textButton">Choose a different folder</button>
+    </div>
+  </section>
+
+  <div id="workspace" class="workspace hidden">
+    <aside class="sidebar">
+      <div class="sidebarBlock">
+        <div class="eyebrow">WRITER</div>
+        <div class="writerHeading"><span class="writerAvatar" id="writerInitial">A</span><strong id="currentWriter">Writer</strong></div>
+        <button id="switchWriterBtn" class="sideButton" type="button">⇄ Switch writer</button>
+      </div>
+      <div class="sidebarBlock">
+        <label class="eyebrow" for="novelSelect">CURRENT NOVEL</label>
+        <select id="novelSelect"></select>
+        <button id="newNovelBtn" class="sideButton" type="button">＋ New novel</button>
+      </div>
+      <div class="sidebarBlock">
+        <div class="between"><label class="eyebrow" for="searchInput">CHARACTERS</label><span class="count" id="characterCount">0</span></div>
+        <input id="searchInput" type="search" placeholder="Search characters…">
+        <button id="newCharacterBtn" class="sideButton" type="button">＋ New character</button>
+      </div>
+      <div id="characterList" class="characterList"></div>
+      <div class="sidebarFooter">Files are saved in your selected folder.<br>Unplug your drive only after you see <strong>Saved</strong>.</div>
+    </aside>
+    <main class="mainPanel">
+      <div id="emptyView" class="emptyView">
+        <div class="bigGlyph">✦</div>
+        <h1 id="emptyTitle">Your writing library</h1>
+        <p id="emptyDescription">Create a novel to get started.</p>
+        <button id="emptyAction" class="primary" type="button">Create a novel</button>
+      </div>
+      <section id="editor" class="editor hidden">
+        <div class="characterHeader">
+          <div class="portrait" id="portrait" aria-label="Character portrait"><span class="silhouette">♟</span></div>
+          <div class="characterTitle">
+            <div class="eyebrow">CHARACTER PROFILE</div>
+            <h1 id="characterName">Character</h1>
+            <div class="timestamp" id="lastSavedLabel"></div>
+            <div class="portraitActions">
+              <label class="quiet fileLabel" for="portraitInput">Upload portrait</label>
+              <input id="portraitInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+              <button id="removePortraitBtn" type="button" class="textButton">Remove portrait</button>
+            </div>
+          </div>
+          <button id="deleteCharacterBtn" class="dangerText" type="button">Delete character</button>
+        </div>
+        <div id="sections"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="nameDialog">
+    <form method="dialog" id="nameForm" class="dialogBody">
+      <h2 id="nameDialogTitle">New item</h2>
+      <label id="nameDialogLabel" for="nameInput">Name</label>
+      <input id="nameInput" maxlength="100" required autocomplete="off">
+      <p id="nameDialogHint" class="helper"></p>
+      <div class="dialogActions">
+        <button value="cancel" class="quiet" type="button" id="cancelNameBtn">Cancel</button>
+        <button value="ok" class="primary" type="submit">Create</button>
+      </div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast hidden" role="alert"></div>
+</body>
+</html>
